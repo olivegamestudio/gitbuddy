@@ -23,8 +23,30 @@
         <ListView ItemsSource="{Binding SelectedBranch.Commits}">
             <ListView.View>
                 <GridView AllowsColumnReorder="true">
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Message}" Header="Message" Width="600"/>
+                    <GridViewColumn Header="Message" Width="600">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <ItemsControl ItemsSource="{Binding Tags}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding Name}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Label  Content="{Binding Message}"/>
+                                </StackPanel>                      
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Author}" Header="Author" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Hash}" Header="Hash" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CommitDate}" Header="CommitDate" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
