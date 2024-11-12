@@ -1,0 +1,32 @@
+﻿<Window x:Class="GitBuddy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GitBuddy"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <DockPanel>
+        <TreeView DockPanel.Dock="Left" Width="300" ItemsSource="{Binding Repositories[0].RootItems}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type local:LocalBranchesViewModel}" ItemsSource="{Binding Branches}">
+                    <TextBlock Text="Local" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:RemoteBranchesViewModel}" ItemsSource="{Binding Branches}">
+                    <TextBlock Text="Remote" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:BranchViewModel}">
+                    <TextBlock Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+        <ListView ItemsSource="{Binding SelectedBranch.Commits}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Message}" Header="Message" Width="600"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Hash}" Header="Hash" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</Window>
