@@ -63,5 +63,15 @@ public partial class RepositoryViewModel : ObservableObject
                 LocalBranches.Branches.Add(branch);
             }
         }
+
+        foreach (BranchViewModel branch in RemoteBranches.Branches)
+        {
+            branch.UpdateBranches(repository.Branches);
+        }
+
+        foreach (BranchViewModel branch in LocalBranches.Branches)
+        {
+            branch.UpdateBranches(repository.Branches);
+        }
     }
 }

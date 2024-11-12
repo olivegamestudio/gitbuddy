@@ -17,7 +17,9 @@ public class TagModel
     /// <summary>
     /// Gets or sets the hash of the tag.
     /// </summary>
-    public string Hash { get; set; }
+    public byte[] Hash { get; set; }
+
+    public string HashString { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TagModel"/> class.
@@ -27,6 +29,7 @@ public class TagModel
     {
         _tag = tag;
         Name = tag.FriendlyName;
-        Hash = tag.Target.Sha;
+        HashString= tag.Target.Sha;
+        Hash = Sha256Hash.ComputeSHA256Hash(tag.Target.Sha);
     }
 }

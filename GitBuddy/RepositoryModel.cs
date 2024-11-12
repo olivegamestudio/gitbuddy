@@ -21,12 +21,15 @@ public class RepositoryModel
     public RepositoryModel(Repository repository)
     {
         _repository = repository;
+        _branches = _repository.Branches.Select(branch => new BranchModel(branch)).ToList();
     }
+
+    private List<BranchModel> _branches = new();
 
     /// <summary>
     /// Gets the branches in the repository.
     /// </summary>
-    public IEnumerable<BranchModel> Branches => _repository.Branches.Select(branch => new BranchModel(branch));
+    public IEnumerable<BranchModel> Branches => _branches;
 
     /// <summary>
     /// Gets the tags in the repository.

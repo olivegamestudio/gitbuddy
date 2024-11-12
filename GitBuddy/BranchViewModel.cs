@@ -8,25 +8,22 @@ namespace GitBuddy;
 /// </summary>
 public partial class BranchViewModel : ObservableObject
 {
-    readonly BranchModel _model;
+    public BranchModel Model { get; private set; }
 
     /// <summary>
     /// Gets or sets the name of the branch.
     /// </summary>
-    [ObservableProperty]
-    string _name;
+    [ObservableProperty] string _name;
 
     /// <summary>
     /// Gets or sets a value indicating whether the branch is remote.
     /// </summary>
-    [ObservableProperty]
-    bool _isRemote;
+    [ObservableProperty] bool _isRemote;
 
     /// <summary>
     /// Gets or sets the collection of commits in the branch.
     /// </summary>
-    [ObservableProperty]
-    ObservableCollection<CommitViewModel> _commits = new();
+    [ObservableProperty] ObservableCollection<CommitViewModel> _commits = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BranchViewModel"/> class.
@@ -34,7 +31,7 @@ public partial class BranchViewModel : ObservableObject
     /// <param name="model">The branch model.</param>
     public BranchViewModel(BranchModel model)
     {
-        _model = model;
+        Model = model;
 
         Name = model.Name;
         IsRemote = model.IsRemote;
@@ -43,5 +40,10 @@ public partial class BranchViewModel : ObservableObject
         {
             Commits.Add(new CommitViewModel(commit));
         }
+    }
+
+    public void UpdateBranches(IEnumerable<BranchModel> branches)
+    {
+        Model.UpdateBranches(branches);
     }
 }

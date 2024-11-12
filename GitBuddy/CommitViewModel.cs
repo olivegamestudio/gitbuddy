@@ -41,6 +41,12 @@ public partial class CommitViewModel : ObservableObject
     ObservableCollection<TagViewModel> _tags = new();
 
     /// <summary>
+    /// Gets or sets the collection of branches associated with the commit.
+    /// </summary>
+    [ObservableProperty]
+    ObservableCollection<BranchViewModel> _branches = new();
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="CommitViewModel"/> class.
     /// </summary>
     /// <param name="model">The commit model.</param>
@@ -48,10 +54,11 @@ public partial class CommitViewModel : ObservableObject
     {
         _model = model;
         Message = model.Message;
-        Hash = model.Hash;
+        Hash = model.HashString;
         Author = model.Author;
         CommitDate = model.CommitDate.ToString();
         UpdateTags();
+        UpdateBranches();
     }
 
     /// <summary>
@@ -63,6 +70,18 @@ public partial class CommitViewModel : ObservableObject
         foreach (TagModel tag in _model.Tags)
         {
             Tags.Add(new TagViewModel(tag));
+        }
+    }
+
+    /// <summary>
+    /// Updates the branches associated with the commit.
+    /// </summary>
+    public void UpdateBranches()
+    {
+        Branches.Clear();
+        foreach (BranchModel branch in _model.Branches)
+        {
+            Branches.Add(new BranchViewModel(branch));
         }
     }
 }

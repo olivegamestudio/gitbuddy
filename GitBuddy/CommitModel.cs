@@ -12,12 +12,15 @@ public class CommitModel
     /// <summary>
     /// Gets or sets the commit message.
     /// </summary>
-    public string Message { get; set; }
+    public string Message { get; set; 
+    }
 
     /// <summary>
     /// Gets or sets the commit hash.
     /// </summary>
-    public string Hash { get; set; }
+    public byte[] Hash { get; set; }
+
+    public string HashString { get; set; }
 
     /// <summary>
     /// Gets or sets the author of the commit.
@@ -35,6 +38,11 @@ public class CommitModel
     public List<TagModel> Tags { get; set; } = new();
 
     /// <summary>
+    /// Gets or sets the list of branches associated with the commit.
+    /// </summary>
+    public List<BranchModel> Branches { get; set; } = new();
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="CommitModel"/> class.
     /// </summary>
     /// <param name="commit">The Git commit.</param>
@@ -42,7 +50,8 @@ public class CommitModel
     {
         _commit = commit;
         Message = commit.MessageShort;
-        Hash = commit.Sha;
+        Hash = Sha256Hash.ComputeSHA256Hash(commit.Sha);
+        HashString = commit.Sha;
         Author = commit.Committer.Name;
         CommitDate = commit.Committer.When.DateTime;
     }
